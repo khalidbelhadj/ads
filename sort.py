@@ -69,6 +69,27 @@ def quick_sort(A: list[int], partition: Partition = partition):
     pass
 
 
+# Counting Sort ------------------------------------
+
+def counting_sort(A, m):
+    n = len(A)
+    C = [0] * m
+
+    for _, key in enumerate(A):
+        C[key] += 1
+    for i in range(1, m):
+        C[i] += C[i - 1]
+
+    B = [None] * n
+
+    for i in range(n - 1, -1, -1):
+        j = A[i]
+        B[C[j] - 1] = A[i]
+        C[j] -= 1
+
+    A[:] = B
+
+
 # Testing ---------------------------------------
 def quick_test(list_length: int, *args: Callable[[list[int]], None]):
     lists: list[list[int]] = []
@@ -80,3 +101,13 @@ def quick_test(list_length: int, *args: Callable[[list[int]], None]):
         f(B)
         lists.append(B)
     return all(map(lambda x: x[0] == x[1], list(zip(lists, lists[1:]))))
+
+def main():
+    # A = [randint(0, 9) for _ in range(10)]
+    A = [1, 1, 1, 1, 1, 1, 1]
+    print("Before:", A)
+    counting_sort(A, 10)
+    print("After:", A)
+
+if __name__ == '__main__':
+    main()

@@ -83,3 +83,17 @@ def mat_mult_strassen(A: Matrix, B: Matrix) -> Matrix:
     C22 = mat_add(mat_add(P5, P1), mat_add(-Matrix(P3), -Matrix(P7)))
 
     return Matrix(np.vstack((np.hstack((C11, C12)), np.hstack((C21, C22)))))
+
+
+import numpy
+from matrix import mat_mult_dnc, mat_mult_naive, mat_mult_strassen
+
+def main():
+    # type: ignore
+    print(mat_mult_naive(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
+    print(mat_mult_dnc(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
+    print(mat_mult_strassen(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
+
+
+if __name__ == '__main__':
+    main()
