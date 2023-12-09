@@ -2,6 +2,7 @@ import numpy as np
 
 Matrix = np.matrix[int, np.dtype[np.int64]]
 
+
 def mat_add(A: Matrix, B: Matrix) -> Matrix:
     if A.shape != B.shape:
         raise Exception('Matrices must be the same shape')
@@ -13,7 +14,6 @@ def mat_add(A: Matrix, B: Matrix) -> Matrix:
             output[i, j] = A[i, j] + B[i, j]
 
     return Matrix(output)
-
 
 
 def mat_mult_naive(A: Matrix, B: Matrix) -> Matrix:
@@ -45,8 +45,14 @@ def mat_mult_dnc(A: Matrix, B: Matrix) -> Matrix:
     if n == 1:
         return mat_mult_naive(A, B)
 
-    a11, a12, a21, a22 = A[:n//2, :n//2], A[:n//2, n//2:], A[n//2:, :n//2], A[n//2:, n//2:]
-    b11, b12, b21, b22 = B[:n//2, :n//2], B[:n//2, n//2:], B[n//2:, :n//2], B[n//2:, n//2:]
+    a11, a12, a21, a22 = A[:n // 2, :n // 2], A[:n // 2,
+                                                n // 2:], A[n // 2:, :n //
+                                                            2], A[n // 2:,
+                                                                  n // 2:]
+    b11, b12, b21, b22 = B[:n // 2, :n // 2], B[:n // 2,
+                                                n // 2:], B[n // 2:, :n //
+                                                            2], B[n // 2:,
+                                                                  n // 2:]
 
     C11 = mat_add(mat_mult_dnc(a11, b11), mat_mult_dnc(a12, b21))
     C12 = mat_add(mat_mult_dnc(a11, b12), mat_mult_dnc(a12, b22))
@@ -66,8 +72,14 @@ def mat_mult_strassen(A: Matrix, B: Matrix) -> Matrix:
     if n == 1:
         return mat_mult_naive(A, B)
 
-    a11, a12, a21, a22 = A[:n//2, :n//2], A[:n//2, n//2:], A[n//2:, :n//2], A[n//2:, n//2:]
-    b11, b12, b21, b22 = B[:n//2, :n//2], B[:n//2, n//2:], B[n//2:, :n//2], B[n//2:, n//2:]
+    a11, a12, a21, a22 = A[:n // 2, :n // 2], A[:n // 2,
+                                                n // 2:], A[n // 2:, :n //
+                                                            2], A[n // 2:,
+                                                                  n // 2:]
+    b11, b12, b21, b22 = B[:n // 2, :n // 2], B[:n // 2,
+                                                n // 2:], B[n // 2:, :n //
+                                                            2], B[n // 2:,
+                                                                  n // 2:]
 
     P1 = mat_mult_strassen(a11, mat_add(b12, -Matrix(b22)))
     P2 = mat_mult_strassen(mat_add(a11, a12), b22)
@@ -88,11 +100,18 @@ def mat_mult_strassen(A: Matrix, B: Matrix) -> Matrix:
 import numpy
 from matrix import mat_mult_dnc, mat_mult_naive, mat_mult_strassen
 
+
 def main():
     # type: ignore
-    print(mat_mult_naive(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
-    print(mat_mult_dnc(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
-    print(mat_mult_strassen(numpy.matrix([[1, 2], [3, 4]]), numpy.matrix([[1, 2], [3, 4]])))
+    print(
+        mat_mult_naive(numpy.matrix([[1, 2], [3, 4]]),
+                       numpy.matrix([[1, 2], [3, 4]])))
+    print(
+        mat_mult_dnc(numpy.matrix([[1, 2], [3, 4]]),
+                     numpy.matrix([[1, 2], [3, 4]])))
+    print(
+        mat_mult_strassen(numpy.matrix([[1, 2], [3, 4]]),
+                          numpy.matrix([[1, 2], [3, 4]])))
 
 
 if __name__ == '__main__':
