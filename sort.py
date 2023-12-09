@@ -58,18 +58,38 @@ def merge_sort(A: list[int]):
 
 Partition = Callable[[list[int], int, int], int]
 
+
 # Quick Sort ------------------------------------
-def partition(A: list[int], p: int, r: int) -> int:
-    return -1
+def median_of_3_partition(A: list[int], p: int, r: int) -> int:
+    xs = sorted([A[p], A[(p + r) // 2], A[r - 1]])
+    return xs[1]
 
-def quick_sort_helper(A: list[int], p: int, r: int, partition: Partition):
-    pass
 
-def quick_sort(A: list[int], partition: Partition = partition):
-    pass
+def quick_sort_helper(A: list[int], p: int, r: int, partition_fn: Partition):
+    if r - p <= 1:
+        return
+
+    pivot = A.pop(partition_fn(A, p, r))
+
+    # i holds the index of the last element that is greater than the pivot value
+    i = p
+
+    for j in range(p, r - 1):
+        if A[j] <= pivot:
+            A[i], A[j] = A[j], A[i]
+            i += 1
+
+    A.insert(i, pivot)
+
+    quick_sort_helper(A, p, i, partition_fn)
+    quick_sort_helper(A, i, r, partition_fn)
+
+def quick_sort(A: list[int], partition_fn: Partition = median_of_3_partition):
+    quick_sort_helper(A, 0, len(A), partition_fn)
 
 
 # Counting Sort ------------------------------------
+
 
 def counting_sort(A, m):
     n = len(A)
@@ -102,12 +122,13 @@ def quick_test(list_length: int, *args: Callable[[list[int]], None]):
         lists.append(B)
     return all(map(lambda x: x[0] == x[1], list(zip(lists, lists[1:]))))
 
+
 def main():
-    # A = [randint(0, 9) for _ in range(10)]
-    A = [1, 1, 1, 1, 1, 1, 1]
-    print("Before:", A)
-    counting_sort(A, 10)
-    print("After:", A)
+    A = [1, 4, 9, 3, 2, 11, 5]
+
+    quick_sort(A, partition_fn=lambda x, y, z: z - 1)
+    print(A)
+
 
 if __name__ == '__main__':
     main()
