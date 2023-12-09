@@ -88,15 +88,16 @@ def quick_sort(A: list[int], partition_fn: Partition = median_of_3_partition):
     quick_sort_helper(A, 0, len(A), partition_fn)
 
 
-# Counting Sort ------------------------------------
-
-
-def counting_sort(A, m):
+# Non-comparative sorting -----------------------
+def counting_sort(A, m, key_fn=lambda x: x):
     n = len(A)
     C = [0] * m
 
+    # C[i] is the number of elements in A that are == i
     for _, key in enumerate(A):
-        C[key] += 1
+        C[key_fn(key)] += 1
+
+    # C[i] is now the number of elements in A that are >= i
     for i in range(1, m):
         C[i] += C[i - 1]
 
@@ -104,16 +105,25 @@ def counting_sort(A, m):
 
     for i in range(n - 1, -1, -1):
         j = A[i]
-        B[C[j] - 1] = A[i]
-        C[j] -= 1
+        B[C[key_fn(j)] - 1] = A[i]
+        C[key_fn(j)] -= 1
 
     A[:] = B
 
+def digit_at(n: int, i: int) -> int:
+    return int(str(n)[i]) if i < len(str(n)) else 0
+
+def radix_sort(A: list[int]):
+    max_digits = max(map(lambda x: len(str(x)), A))
+
+    for i in range(max_digits - 1, -1, -1):
+        counting_sort(A, 10, key_fn=lambda x : digit_at(x, i))
 
 # Testing ---------------------------------------
 def quick_test(list_length: int, *args: Callable[[list[int]], None]):
     lists: list[list[int]] = []
     A: list[int] = []
+
     for _ in range(list_length):
         A.append(randint(0, 1000))
     for f in args:
@@ -124,9 +134,8 @@ def quick_test(list_length: int, *args: Callable[[list[int]], None]):
 
 
 def main():
-    A = [1, 4, 9, 3, 2, 11, 5]
-
-    quick_sort(A, partition_fn=lambda x, y, z: z - 1)
+    A = [112, 495, 971, 135, 200, 111, 500]
+    radix_sort(A)
     print(A)
 
 
