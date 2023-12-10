@@ -22,7 +22,6 @@ def dft_naive(coeffs: list[complex]) -> list[complex]:
 
 
 def fft(A: list[complex]) -> list[complex]:
-
     n = len(A)
 
     if n == 1:
@@ -51,11 +50,11 @@ def inverse_fft(A: list[complex]) -> list[complex]:
     y.reverse()
     y.pop()
     y.insert(0, first)
-    return list(map(lambda x: x/len(A), y))
+    return list(map(lambda x: x / len(A), y))
 
 
-if __name__ == '__main__':
-    xs = [random.random()*(100 + 0j) for _ in range(1000)]
+if __name__ == "__main__":
+    xs = [random.random() * (100 + 0j) for _ in range(1000)]
 
     dft_start = time.time()
     dft_value = dft_naive(xs)

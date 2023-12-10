@@ -34,7 +34,7 @@ def merge(A: list[int], merge_range: tuple[int, int, int]):
             B.append(A[j])
             j += 1
 
-    A[p:r + 1] = B
+    A[p : r + 1] = B
 
 
 def merge_sort_helper(A: list[int], sort_range: tuple[int, int]):
@@ -84,11 +84,12 @@ def quick_sort_helper(A: list[int], p: int, r: int, partition_fn: Partition):
     quick_sort_helper(A, p, i, partition_fn)
     quick_sort_helper(A, i, r, partition_fn)
 
+
 def quick_sort(A: list[int], partition_fn: Partition = median_of_3_partition):
     quick_sort_helper(A, 0, len(A), partition_fn)
 
 
-# Non-comparative sorting -----------------------
+# Counting Sort ---------------------------------
 def counting_sort(A, m, key_fn=lambda x: x):
     n = len(A)
     C = [0] * m
@@ -110,34 +111,15 @@ def counting_sort(A, m, key_fn=lambda x: x):
 
     A[:] = B
 
-def digit_at(n: int, i: int) -> int:
-    return int(str(n)[i]) if i < len(str(n)) else 0
 
+# Radix Sort ------------------------------------
 def radix_sort(A: list[int]):
-    max_digits = max(map(lambda x: len(str(x)), A))
-
-    for i in range(max_digits - 1, -1, -1):
-        counting_sort(A, 10, key_fn=lambda x : digit_at(x, i))
-
-# Testing ---------------------------------------
-def quick_test(list_length: int, *args: Callable[[list[int]], None]):
-    lists: list[list[int]] = []
-    A: list[int] = []
-
-    for _ in range(list_length):
-        A.append(randint(0, 1000))
-    for f in args:
-        B = A[:]
-        f(B)
-        lists.append(B)
-    return all(map(lambda x: x[0] == x[1], list(zip(lists, lists[1:]))))
+    raise NotImplementedError
 
 
 def main():
-    A = [112, 495, 971, 135, 200, 111, 500]
-    radix_sort(A)
-    print(A)
+    pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
