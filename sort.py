@@ -2,7 +2,7 @@ from typing import Callable
 
 
 def insert_sort(A: list[float]):
-    """Sorts the list A using insert sort in place"""
+    """Sorts the list `A` using insert sort in place"""
     if len(A) <= 1:
         return
 
@@ -31,7 +31,7 @@ def merge(A: list[float], p: int, q: int, r: int):
 
 
 def merge_sort(A: list[float], p: int, r: int):
-    """Sorts the list A using merge sort within sort_range"""
+    """Sorts the list `A` using merge sort within sort_range"""
     if r - p <= 1:
         return
 
@@ -64,7 +64,7 @@ def partition(A: list[float], p: int, r: int, pivot_fn: PivotFn) -> int:
 def quicksort(
     A: list[float], p: int, r: int, pivot_fn: PivotFn = lambda _, p, r: r - 1
 ):
-    """Sorts the list A using quicksort within the range p..r"""
+    """Sorts the list `A` using quicksort within the range p..r"""
     if r - p <= 1:
         return
 
@@ -77,7 +77,7 @@ KeyFn = Callable[[int], int]
 
 
 def counting_sort(A: list[int], m: int, key_fn: KeyFn = lambda x: x):
-    """Sorts the list A using counting sort, given that A[i] <= m"""
+    """Sorts the list `A` using counting sort, given that `A[i] <= m`"""
     if not all(0 <= key_fn(a) < m for a in A):
         raise ValueError(f"Elements of list must be between 0 and {m}")
 
@@ -103,7 +103,7 @@ def counting_sort(A: list[int], m: int, key_fn: KeyFn = lambda x: x):
 
 
 def get_digit(n: int, i: int) -> int:
-    """Returns the ith digit of n. Returns 0 if i is greater than the number of digits"""
+    """Returns the ith digit of `n`. Returns 0 if `i` is greater than the number of digits"""
     s = str(n)
     if i >= len(s):
         return 0
@@ -112,7 +112,7 @@ def get_digit(n: int, i: int) -> int:
 
 
 def radix_sort(A: list[int]):
-    """Sorts the list A using radix sort, given that 0 < A[i] <= m"""
+    """Sorts the list `A` using radix sort, given that `0 < A[i] <= m`"""
     # Largest number of digits
     d = len(str(max(A)))
 

@@ -108,7 +108,7 @@ def matmul_strassen(A: matrix, B: matrix) -> matrix:
     return matrix(np.vstack((np.hstack((C11, C12)), np.hstack((C21, C22)))))
 
 
-def maxtrix_chain_mult(A: list[int]):
+def maxtrix_chain_order(A: list[int]):
     """Computes the optimal order for matrix multiplcation"""
     m = np.zeros((len(A), len(A)))
     s = np.zeros((len(A), len(A)))

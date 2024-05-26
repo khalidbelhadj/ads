@@ -62,7 +62,3 @@ def inverse_fft(A: list[complex]) -> list[complex]:
     y.reverse()
     y.insert(0, y.pop())
     return [x / n for x in y]
-
-
-print(dft_naive([1, 2, 3, 4]))
-print(fft([1, 2, 3, 4]))
