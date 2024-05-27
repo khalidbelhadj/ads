@@ -5,6 +5,7 @@ from disjoint_sets import DisjointSets
 
 
 def prims(graph: Graph) -> Graph:
+    """Computes the minimum spanning tree using Prim's algorithm"""
     if not all(graph.is_connected(i) for i in range(graph.count - 1)):
         raise ValueError("The graph must be fully connected to run Prim's algorithm")
 
@@ -33,6 +34,7 @@ def prims(graph: Graph) -> Graph:
 
 
 def kruskal(graph: Graph):
+    """Computes the minimum spanning tree using Krukal's algorithm and the disjoint set data structure"""
     F = Graph(graph.count)
     S = DisjointSets()
 
