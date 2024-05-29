@@ -33,7 +33,7 @@ def prims(graph: Graph) -> Graph:
     return T
 
 
-def kruskal(graph: Graph):
+def kruskal(graph: Graph) -> Graph:
     """Computes the minimum spanning tree using Krukal's algorithm and the disjoint set data structure"""
     F = Graph(graph.count)
     S = DisjointSets()
@@ -43,9 +43,24 @@ def kruskal(graph: Graph):
     for i in range(graph.count):
         S.make_set(i)
 
+    edges = [(w, S.get_node(a), S.get_node(b)) for (w, a, b) in edges]
+
     for weight, u, v in edges:
         if S.find_set(u) != S.find_set(v):
-            F.add_edge(u, v, weight)
+            F.add_edge(u.value, v.value, weight)
             S.union(u, v)
 
     return F
+
+def mst_example():
+    g = Graph(5)
+
+    g.add_edge(0, 2, 3)
+    g.add_edge(2, 1, 10)
+    g.add_edge(2, 3, 2)
+    g.add_edge(2, 4, 6)
+    g.add_edge(1, 3, 4)
+    g.add_edge(3, 4, 1)
+
+    print(prims(g))
+    print(kruskal(g))
